@@ -1,11 +1,11 @@
 CXX ?= g++
 CXXFLAGS ?= -O2
-LDLIBS ?= -lglfw -lGL
 LDFLAGS ?=
 
 BACKEND := OPENGL3
 
 _CXXFLAGS := -DICOPTR_$(BACKEND) --std=c++17 -Wall -Wextra $(CXXFLAGS)
+LDLIBS := -lglfw -lGL -lcurl
 
 SRC_DIR := ./src
 

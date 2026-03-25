@@ -40,5 +40,5 @@
 # debug information files
 *.dwo
 
-# build dir
-build/
+# imgui
+imgui.ini

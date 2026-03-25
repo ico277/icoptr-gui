@@ -1,5 +1,5 @@
 #include <iostream>
-#include "info.hpp"
+#include "icoptr.h"
 
 #if defined(ICOPTR_OPENGL3) || defined(ICOPTR_OPENGL2)
 extern "C" {
@@ -17,11 +17,15 @@ extern "C" {
 #include "./imgui/imgui_impl_opengl2.h"
 #endif
 
+
 static void glfw_error_callback(int error, const char* description) {
     fprintf(stderr, "GLFW Error %d: %s\n", error, description);
 }
 
 int main() {
+    upload_file("");
+
+
     // Setup GLFW
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit())
@@ -29,8 +33,8 @@ int main() {
 
 #ifdef ICOPTR_OPENGL2
     // GL 2.0
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 1);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
 #else
     // GL 3.0 + GLSL 130
     auto glsl_version = "#version 130";
@@ -96,6 +100,7 @@ int main() {
         ImGui::PopStyleVar(3);
         ImGui::Begin("Hello, world!", nullptr, fullscreen__flags);
         ImGui::Text("This is some silly text :3");
+        ImGui::Text(":3");
         ImGui::End();
 
         // Rendering
