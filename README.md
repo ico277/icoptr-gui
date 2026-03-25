@@ -7,14 +7,16 @@ A little GUI program for my 0x0 instance
 - GNU Make
 - GLFW3
 
-## Compiling
-
 ### OpenGL3
-```bash
+```sh
+git clone --recursive --shallow-submodules https://github.com/ico277/icoptr-gui
+cd icoptr-gui/
 make -j$(nproc) BACKEND=OPENGL3
 ```
 
 ### OpenGL2
-```bash
+```sh
+git clone --recursive --shallow-submodules https://github.com/ico277/icoptr-gui
+cd icoptr-gui/
 make -j$(nproc) BACKEND=OPENGL2
 ```
