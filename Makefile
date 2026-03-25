@@ -1,33 +1,32 @@
 CXX ?= g++
 CXXFLAGS ?= -O2
-LDLIBS ?= -limgui
+LDLIBS ?= -lglfw -lGL
 LDFLAGS ?=
 
-_CXXFLAGS := --std=c++17 -Wall -Wextra $(CXXFLAGS)
+BACKEND := OPENGL
 
-SRC_DIR := src
-BUILD_DIR := build
+_CXXFLAGS := -DICOPTR_$(BACKEND) --std=c++17 -Wall -Wextra $(CXXFLAGS)
+
+SRC_DIR := ./src
 
 .PHONY: all clean run
 
-TARGET := $(BUILD_DIR)/meowinfo
+TARGET := ./icoptr-gui.out
 
-SRCS := $(wildcard $(SRC_DIR)/*.cpp)
-OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRCS))
+SRCS := $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/imgui/*.cpp)
+OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(SRC_DIR)/%.o,$(SRCS))
 
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CXX) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(_CXXFLAGS) -c $< -o $@
 
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
 
 clean:
-	rm -rf $(BUILD_DIR)
+	rm $(OBJS)
 
 run: $(TARGET)
-	$(TARGET) $(RUNFLAGS) 
+	@ ./$(TARGET) $(RUNFLAGS) 
