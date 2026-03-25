@@ -23,71 +23,80 @@ int main() {
         return 1;
 
     // GL 3.0 + GLSL 130 for Windows/Linux
-    auto glsl_version = "#version 130";
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    //auto glsl_version = "#version 130";
+    //glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    //glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Dear ImGui GLFW+OpenGL3 Example", nullptr, nullptr);
+    // Create window
+    GLFWwindow* window = glfwCreateWindow(500, 500, "icoptr-gui", nullptr, nullptr);
     if (window == nullptr)
         return 1;
 
+    // Setup window
     glfwMakeContextCurrent(window);
-    glfwSwapInterval(1); // Enable vsync
+    glfwSwapInterval(1);    // Enable vsync
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // enable keyboard movement                  
 
-    // Setup Platform/Renderer backends
-    ImGui_ImplGlfw_InitForOpenGL(window, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
-    ImGui_ImplOpenGL3_Init(glsl_version);
+    // Setup OpenGL backend
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    //ImGui_ImplOpenGL3_Init(glsl_version);
+    ImGui_ImplOpenGL3_Init();
 
-    bool show_demo_window = true;
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    ImGuiWindowFlags fullscreen__flags = /*ImGuiWindowFlags_NoTitleBar*/ 0 | 
+        ImGuiWindowFlags_NoCollapse |
+        ImGuiWindowFlags_NoResize |
+        ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoBringToFrontOnFocus |
+        ImGuiWindowFlags_NoNavFocus;
 
     while (!glfwWindowShouldClose(window)) {
         // Poll and handle events (inputs, window resize, etc.)
-        glfwPollEvents();
+        //glfwPollEvents();
+        glfwWaitEvents();
 
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        // --- YOUR UI CODE GOES HERE ---
-        if (show_demo_window) {
-            ImGui::ShowDemoWindow(&show_demo_window);
-        }
-
-        // Create a simple custom window
-        ImGui::Begin("Hello, world!"); 
-        ImGui::Text("This is some useful text.");
-        ImGui::ColorEdit3("Clear color", (float*)&clear_color);
+        // window
+        ImGuiViewport* viewport = ImGui::GetMainViewport();
+        ImGui::SetNextWindowPos(viewport->WorkPos);
+        //std::cout << viewport->WorkSize.x << "x" << viewport->WorkSize.y << "\n";
+        ImGui::SetNextWindowSize(viewport->WorkSize);
+        // Remove window rounding and padding so it sits flush against the edges
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+        // Pop the style variables we pushed above
+        ImGui::PopStyleVar(3);
+        ImGui::Begin("Hello, world!", nullptr, fullscreen__flags);
+        ImGui::Text("This is some silly text :3");
         ImGui::End();
-        // ------------------------------
 
-        // rendering
+        // Rendering
         ImGui::Render();
         int display_w, display_h;
         glfwGetFramebufferSize(window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
-        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-        glClear(GL_COLOR_BUFFER_BIT);
+        //glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+        //glClear(GL_COLOR_BUFFER_BIT);
         
-        // draw the ImGui data generated above
+        // Draw the ImGui data generated above
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         glfwSwapBuffers(window);
     }
 
-    // cleanup
+    // Cleanup
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
-
     glfwDestroyWindow(window);
     glfwTerminate();
 
