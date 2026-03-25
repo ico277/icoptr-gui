@@ -1,26 +1,9 @@
 [
   {
-    "file": "src/lib.cpp",
-    "arguments": [
-      "g++",
-      "-DICOPTR_OPENGL",
-      "--std=c++17",
-      "-Wall",
-      "-Wextra",
-      "-O2",
-      "-c",
-      "src/lib.cpp",
-      "-o",
-      "src/lib.o"
-    ],
-    "directory": "/home/ico277/icoptr-gui",
-    "output": "src/lib.o"
-  },
-  {
     "file": "src/main.cpp",
     "arguments": [
       "g++",
-      "-DICOPTR_OPENGL",
+      "-DICOPTR_OPENGL3",
       "--std=c++17",
       "-Wall",
       "-Wextra",
@@ -32,124 +15,5 @@
     ],
     "directory": "/home/ico277/icoptr-gui",
     "output": "src/main.o"
-  },
-  {
-    "file": "src/imgui/imgui.cpp",
-    "arguments": [
-      "g++",
-      "-DICOPTR_OPENGL",
-      "--std=c++17",
-      "-Wall",
-      "-Wextra",
-      "-O2",
-      "-c",
-      "src/imgui/imgui.cpp",
-      "-o",
-      "src/imgui/imgui.o"
-    ],
-    "directory": "/home/ico277/icoptr-gui",
-    "output": "src/imgui/imgui.o"
-  },
-  {
-    "file": "src/imgui/imgui_demo.cpp",
-    "arguments": [
-      "g++",
-      "-DICOPTR_OPENGL",
-      "--std=c++17",
-      "-Wall",
-      "-Wextra",
-      "-O2",
-      "-c",
-      "src/imgui/imgui_demo.cpp",
-      "-o",
-      "src/imgui/imgui_demo.o"
-    ],
-    "directory": "/home/ico277/icoptr-gui",
-    "output": "src/imgui/imgui_demo.o"
-  },
-  {
-    "file": "src/imgui/imgui_draw.cpp",
-    "arguments": [
-      "g++",
-      "-DICOPTR_OPENGL",
-      "--std=c++17",
-      "-Wall",
-      "-Wextra",
-      "-O2",
-      "-c",
-      "src/imgui/imgui_draw.cpp",
-      "-o",
-      "src/imgui/imgui_draw.o"
-    ],
-    "directory": "/home/ico277/icoptr-gui",
-    "output": "src/imgui/imgui_draw.o"
-  },
-  {
-    "file": "src/imgui/imgui_impl_glfw.cpp",
-    "arguments": [
-      "g++",
-      "-DICOPTR_OPENGL",
-      "--std=c++17",
-      "-Wall",
-      "-Wextra",
-      "-O2",
-      "-c",
-      "src/imgui/imgui_impl_glfw.cpp",
-      "-o",
-      "src/imgui/imgui_impl_glfw.o"
-    ],
-    "directory": "/home/ico277/icoptr-gui",
-    "output": "src/imgui/imgui_impl_glfw.o"
-  },
-  {
-    "file": "src/imgui/imgui_impl_opengl3.cpp",
-    "arguments": [
-      "g++",
-      "-DICOPTR_OPENGL",
-      "--std=c++17",
-      "-Wall",
-      "-Wextra",
-      "-O2",
-      "-c",
-      "src/imgui/imgui_impl_opengl3.cpp",
-      "-o",
-      "src/imgui/imgui_impl_opengl3.o"
-    ],
-    "directory": "/home/ico277/icoptr-gui",
-    "output": "src/imgui/imgui_impl_opengl3.o"
-  },
-  {
-    "file": "src/imgui/imgui_tables.cpp",
-    "arguments": [
-      "g++",
-      "-DICOPTR_OPENGL",
-      "--std=c++17",
-      "-Wall",
-      "-Wextra",
-      "-O2",
-      "-c",
-      "src/imgui/imgui_tables.cpp",
-      "-o",
-      "src/imgui/imgui_tables.o"
-    ],
-    "directory": "/home/ico277/icoptr-gui",
-    "output": "src/imgui/imgui_tables.o"
-  },
-  {
-    "file": "src/imgui/imgui_widgets.cpp",
-    "arguments": [
-      "g++",
-      "-DICOPTR_OPENGL",
-      "--std=c++17",
-      "-Wall",
-      "-Wextra",
-      "-O2",
-      "-c",
-      "src/imgui/imgui_widgets.cpp",
-      "-o",
-      "src/imgui/imgui_widgets.o"
-    ],
-    "directory": "/home/ico277/icoptr-gui",
-    "output": "src/imgui/imgui_widgets.o"
   }
 ]

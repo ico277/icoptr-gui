@@ -1,7 +1,7 @@
 #include <iostream>
 #include "info.hpp"
 
-#ifdef ICOPTR_OPENGL
+#if defined(ICOPTR_OPENGL3) || defined(ICOPTR_OPENGL2)
 extern "C" {
     #include <GLFW/glfw3.h>
 }
@@ -10,7 +10,12 @@ extern "C" {
 #include "./imgui/imgui.h"
 
 #include "./imgui/imgui_impl_glfw.h"
+#ifdef ICOPTR_OPENGL3
 #include "./imgui/imgui_impl_opengl3.h"
+#endif
+#ifdef ICOPTR_OPENGL2
+#include "./imgui/imgui_impl_opengl2.h"
+#endif
 
 static void glfw_error_callback(int error, const char* description) {
     fprintf(stderr, "GLFW Error %d: %s\n", error, description);
@@ -22,10 +27,16 @@ int main() {
     if (!glfwInit())
         return 1;
 
-    // GL 3.0 + GLSL 130 for Windows/Linux
-    //auto glsl_version = "#version 130";
-    //glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    //glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+#ifdef ICOPTR_OPENGL2
+    // GL 2.0
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+#else
+    // GL 3.0 + GLSL 130
+    auto glsl_version = "#version 130";
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+#endif
 
     // Create window
     GLFWwindow* window = glfwCreateWindow(500, 500, "icoptr-gui", nullptr, nullptr);
@@ -44,8 +55,12 @@ int main() {
 
     // Setup OpenGL backend
     ImGui_ImplGlfw_InitForOpenGL(window, true);
-    //ImGui_ImplOpenGL3_Init(glsl_version);
-    ImGui_ImplOpenGL3_Init();
+#ifdef ICOPTR_OPENGL2
+    ImGui_ImplOpenGL2_Init();
+#else
+    ImGui_ImplOpenGL3_Init(glsl_version);
+#endif
+    //ImGui_ImplOpenGL3_Init();
 
     ImGuiWindowFlags fullscreen__flags = /*ImGuiWindowFlags_NoTitleBar*/ 0 | 
         ImGuiWindowFlags_NoCollapse |
@@ -60,7 +75,11 @@ int main() {
         glfwWaitEvents();
 
         // Start the Dear ImGui frame
+#ifdef ICOPTR_OPENGL2
+        ImGui_ImplOpenGL2_NewFrame();
+#else
         ImGui_ImplOpenGL3_NewFrame();
+#endif
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
@@ -88,13 +107,21 @@ int main() {
         //glClear(GL_COLOR_BUFFER_BIT);
         
         // Draw the ImGui data generated above
+#ifdef ICOPTR_OPENGL2
+        ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+#else
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+#endif
 
         glfwSwapBuffers(window);
     }
 
     // Cleanup
+#ifdef ICOPTR_OPENGL2
+    ImGui_ImplOpenGL2_Shutdown();
+#else
     ImGui_ImplOpenGL3_Shutdown();
+#endif
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
     glfwDestroyWindow(window);

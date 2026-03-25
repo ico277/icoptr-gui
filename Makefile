@@ -3,7 +3,7 @@ CXXFLAGS ?= -O2
 LDLIBS ?= -lglfw -lGL
 LDFLAGS ?=
 
-BACKEND := OPENGL
+BACKEND := OPENGL3
 
 _CXXFLAGS := -DICOPTR_$(BACKEND) --std=c++17 -Wall -Wextra $(CXXFLAGS)
 
