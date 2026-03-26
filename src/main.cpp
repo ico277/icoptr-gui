@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "icoptr.h"
 
 #if defined(ICOPTR_OPENGL3) || defined(ICOPTR_OPENGL2)
@@ -73,6 +74,10 @@ int main() {
         ImGuiWindowFlags_NoBringToFrontOnFocus |
         ImGuiWindowFlags_NoNavFocus;
 
+    char instance_buffer[1024] = "https://0x0.ico277.xyz/";
+    char file_path_buffer[1024] = "sex";
+    std::string status_text = "Press Upload to upload!";
+
     while (!glfwWindowShouldClose(window)) {
         // Poll and handle events (inputs, window resize, etc.)
         //glfwPollEvents();
@@ -100,7 +105,22 @@ int main() {
         ImGui::PopStyleVar(3);
         ImGui::Begin("Hello, world!", nullptr, fullscreen__flags);
         ImGui::Text("This is some silly text :3");
-        ImGui::Text(":3");
+        ImGui::InputText("Instance URL", instance_buffer, 1024);
+        // TODO add file prompt
+        ImGui::InputText("File Path", file_path_buffer, 1024);
+        if (ImGui::Button("Upload")) {
+            // TODO check if instance URL is a valid URL
+            
+            // checking if file path is valid
+            std::ifstream test(file_path_buffer); 
+            if (!test) {
+                status_text = "Invalid file!";
+            } else {
+                // TODO add uploading
+                status_text = "Uploading...";
+            }
+        }
+        ImGui::Text("%s", status_text.c_str());
         ImGui::End();
 
         // Rendering
@@ -119,6 +139,8 @@ int main() {
 #endif
 
         glfwSwapBuffers(window);
+
+        //std::cout << instance_buffer << "\n" << file_path_buffer << "\n";
     }
 
     // Cleanup
